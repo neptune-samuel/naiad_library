@@ -17,12 +17,21 @@ message(STATUS "=> CMAKE_BINARY_DIR=${CMAKE_BINARY_DIR}")
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-## use topdir
+## General rules for all nos targets
+if (NOT TOPDIR)
 get_filename_component(TOPDIR ${PROJECT_SOURCE_DIR}/../ ABSOLUTE)
-message(STATUS "=> set TOPDIR=${TOPDIR}")
+endif()
+if (NOT NOS_INSTALL_PREFIX)
+set(NOS_INSTALL_PREFIX      ${TOPDIR}/install/${CMAKE_SYSTEM_PROCESSOR})
+endif()
 
-set(LOCAL_INSTALL_DIR ${TOPDIR}/install/${CMAKE_SYSTEM_PROCESSOR})
+## set lock install dir
+set(LOCAL_INSTALL_DIR       ${NOS_INSTALL_PREFIX})
+
+message(STATUS "=> TOPDIR=${TOPDIR}")
+message(STATUS "=> NOS_INSTALL_PREFIX=${NOS_INSTALL_PREFIX}")
 message(STATUS "=> LOCAL_INSTALL_DIR=${LOCAL_INSTALL_DIR}")
+## End 
 
 include(rules/fmt.cmake)
 include(rules/docopt.cmake)
