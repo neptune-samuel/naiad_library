@@ -3,7 +3,7 @@ include(ExternalProject)
 
 set(SPDLOG_PREFIX               ${CMAKE_BINARY_DIR}/spdlog)
 set(SPDLOG_URL                  ${PROJECT_SOURCE_DIR}/zips/spdlog-1.11.0.tar.gz)
-set(SPDLOG_INSTALL_PREFIX       ${LOCAL_INSTALL_DIR})
+set(SPDLOG_INSTALL_PREFIX       ${LOCAL_INSTALL_PREFIX})
 
 set(SPDLOG_CMAKE_ARGS           -DCMAKE_INSTALL_PREFIX=${SPDLOG_INSTALL_PREFIX})
 # set(SPDLOG_CONFIGURE          "")

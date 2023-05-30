@@ -3,7 +3,7 @@ include(ExternalProject)
 
 set(LIBFMT_PREFIX               ${CMAKE_BINARY_DIR}/libfmt)
 set(LIBFMT_URL                  ${PROJECT_SOURCE_DIR}/zips/fmt-8.1.1.tar.gz)
-set(LIBFMT_INSTALL_PREFIX       ${LOCAL_INSTALL_DIR})
+set(LIBFMT_INSTALL_PREFIX       ${LOCAL_INSTALL_PREFIX})
 
 set(LIBFMT_CMAKE_ARGS           -DFMT_TEST=OFF -DCMAKE_INSTALL_PREFIX=${LIBFMT_INSTALL_PREFIX})
 

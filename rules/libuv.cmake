@@ -3,7 +3,7 @@ include(ExternalProject)
 
 set(LIBUV_PREFIX                ${CMAKE_BINARY_DIR}/libuv)
 set(LIBUV_URL                   ${PROJECT_SOURCE_DIR}/zips/libuv-1.44.2.tar.gz)
-set(LIBUV_INSTALL_PREFIX        ${LOCAL_INSTALL_DIR})
+set(LIBUV_INSTALL_PREFIX        ${LOCAL_INSTALL_PREFIX})
 set(LIBUV_CMAKE_ARGS            -DCMAKE_INSTALL_PREFIX=${LIBUV_INSTALL_PREFIX})
 # set(LIBUV_CONFIGURE    "")
 # set(LIBUV_MAKE         cd ${LIBUV_PREFIX}/src/libuv-build && make)
