@@ -9,31 +9,41 @@ cmake_minimum_required(VERSION 3.10)
 
 project(nos_library)
 
-message(STATUS "=> enter project ${PROJECT_NAME}")
-message(STATUS "=> PROJECT_SOURCE_DIR=${PROJECT_SOURCE_DIR}")
-message(STATUS "=> PROJECT_BINARY_DIR=${PROJECT_BINARY_DIR}")
-message(STATUS "=> CMAKE_BINARY_DIR=${CMAKE_BINARY_DIR}")
-
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+## 获取ROS的环境变量
+execute_process(COMMAND "printenv" "ROS_DISTRO" OUTPUT_VARIABLE ROS_DISTRO)
+string(REPLACE "\n" "" ROS_DISTRO "${ROS_DISTRO}")
+
+if (ROS_DISTRO STREQUAL "foxy")
+set(ROS_FOXY  ON)
+get_filename_component(WS_TOPDIR ${PROJECT_SOURCE_DIR}/../../ ABSOLUTE)
+endif()
+message(STATUS "=> WS_TOPDIR=${WS_TOPDIR}")
+message(STATUS "=> ROS_DISTRO=${ROS_DISTRO}")
+message(STATUS "=> ROS_FOXY=${ROS_FOXY}")
+
 ## General rules for all nos targets
-if (NOT TOPDIR)
-get_filename_component(TOPDIR ${PROJECT_SOURCE_DIR}/../ ABSOLUTE)
+if (NOT WS_TOPDIR)
+get_filename_component(WS_TOPDIR ${PROJECT_SOURCE_DIR}/../ ABSOLUTE)
 endif()
 if (NOT NOS_INSTALL_PREFIX)
-set(NOS_INSTALL_PREFIX      ${TOPDIR}/install/${CMAKE_SYSTEM_PROCESSOR})
+if (ROS_FOXY)
+set(NOS_INSTALL_PREFIX      ${WS_TOPDIR}/install/${PROJECT_NAME})
+else()
+set(NOS_INSTALL_PREFIX      ${WS_TOPDIR}/install/${CMAKE_SYSTEM_PROCESSOR})
+endif()
 endif()
 
 ## set lock install dir
 set(LOCAL_INSTALL_DIR       ${NOS_INSTALL_PREFIX})
 
-message(STATUS "=> TOPDIR=${TOPDIR}")
 message(STATUS "=> NOS_INSTALL_PREFIX=${NOS_INSTALL_PREFIX}")
 message(STATUS "=> LOCAL_INSTALL_DIR=${LOCAL_INSTALL_DIR}")
 ## End 
 
 include(rules/fmt.cmake)
-include(rules/docopt.cmake)
-include(rules/spdlog.cmake)
-include(rules/libuv.cmake)
+# include(rules/docopt.cmake)
+# include(rules/spdlog.cmake)
+# include(rules/libuv.cmake)
