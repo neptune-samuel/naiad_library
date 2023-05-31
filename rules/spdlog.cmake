@@ -5,7 +5,7 @@ set(SPDLOG_PREFIX               ${CMAKE_BINARY_DIR}/spdlog)
 set(SPDLOG_URL                  ${PROJECT_SOURCE_DIR}/zips/spdlog-1.11.0.tar.gz)
 set(SPDLOG_INSTALL_PREFIX       ${LOCAL_INSTALL_PREFIX})
 
-set(SPDLOG_CMAKE_ARGS           -DCMAKE_INSTALL_PREFIX=${SPDLOG_INSTALL_PREFIX})
+set(SPDLOG_CMAKE_ARGS           -DCMAKE_INSTALL_PREFIX=${SPDLOG_INSTALL_PREFIX} -DSPDLOG_BUILD_EXAMPLE=OFF -DCMAKE_BUILD_TYPE=Debug)
 # set(SPDLOG_CONFIGURE          "")
 # set(SPDLOG_MAKE               cd ${SPDLOG_PREFIX}/src/spdlog-build && make)
 # set(SPDLOG_INSTALL            cd ${SPDLOG_PREFIX}/src/spdlog-build && make install)
