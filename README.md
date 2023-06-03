@@ -1,11 +1,5 @@
-### NOS第三方库编译工程
+### NAIAD第三方库编译工程
 
-### CMakeLists.txt 中命名规范
+- 支持ROS下编译和非ROS环境下编译
 
-WS_ROOT_DIR
-WS_INSTALL_PREFIX
-WS_INCLUDE_DIR 
 
-LOCAL_INSTALL_PREFIX
-LOCAL_INCLUDE_DIR 
-LOCAL_LIBS_DIR 

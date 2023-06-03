@@ -1,54 +1,42 @@
 
 #
-# cmake rules for nos_common
+# cmake rules for naiad_library
 # Author: LiuChuansen
 # Date: 20230512
 # 
-
 cmake_minimum_required(VERSION 3.10)
 
-project(nos_library)
+project(naiad_library)
 
-set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
+set(RULES_DIR ${CMAKE_CURRENT_SOURCE_DIR}/rules)
+set(LIBS_BUILD_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libs-build)
+## 设定本地安装目录，临时安装目录
+set(LIBS_INSTALL_DIR ${PROJECT_BINARY_DIR}/libs-install)
 
-## 得到工作空间的根目录，通过ROS的环境变量判断
-if (NOT ROS_DISABLE)
-execute_process(COMMAND "printenv" "ROS_DISTRO" OUTPUT_VARIABLE ROS_DISTRO)
-string(REPLACE "\n" "" ROS_DISTRO "${ROS_DISTRO}")
+include(${RULES_DIR}/ws_common.cmake)
+
+## ROS环境下，安装目录由ROS指定, 非ROS环境下，需自行设定默认安装目录
+if (NOT WS_ROS)
+set(CMAKE_INSTALL_PREFIX ${WS_INSTALL_PREFIX})
 endif()
 
-if (ROS_DISTRO STREQUAL "foxy")
-set(ROS_FOXY  ON)
-set(ROS2 ON)
-get_filename_component(WS_ROOT_DIR ${PROJECT_SOURCE_DIR}/../../ ABSOLUTE)
-else()
-get_filename_component(WS_ROOT_DIR ${PROJECT_SOURCE_DIR}/../ ABSOLUTE)
-endif()
 
-message(STATUS "=> WS_ROOT_DIR=${WS_ROOT_DIR}")
-message(STATUS "=> ROS_DISTRO=${ROS_DISTRO}")
-message(STATUS "=> ROS_FOXY=${ROS_FOXY}")
-
-## 设定工作空间安装目录
-if (NOT WS_INSTALL_PREFIX)
-if (ROS2)
-set(WS_INSTALL_PREFIX      ${WS_ROOT_DIR}/install/${PROJECT_NAME})
-else()
-set(WS_INSTALL_PREFIX      ${WS_ROOT_DIR}/install/${CMAKE_SYSTEM_PROCESSOR})
-endif()
-endif()
-
-## 设定本地安装目录，一般与工作空间安装目录相同
-if (NOT LOCAL_INSTALL_PREFIX)
-set(LOCAL_INSTALL_PREFIX       ${WS_INSTALL_PREFIX})
-endif()
-
-message(STATUS "=> WS_INSTALL_PREFIX=${WS_INSTALL_PREFIX}")
+message(STATUS "=> CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}")
 message(STATUS "=> LOCAL_INSTALL_PREFIX=${LOCAL_INSTALL_PREFIX}")
 ## End 
 
-include(rules/fmt.cmake)
-include(rules/docopt.cmake)
-include(rules/spdlog.cmake)
-include(rules/libuv.cmake)
+include(ExternalProject)
+ExternalProject_Add(build_libs 
+    SOURCE_DIR               ${LIBS_BUILD_DIR}
+    CMAKE_ARGS               -DLIBS_INSTALL_DIR=${LIBS_INSTALL_DIR}
+)
+
+
+install(DIRECTORY ${LIBS_INSTALL_DIR}/include/ DESTINATION include)
+install(DIRECTORY ${LIBS_INSTALL_DIR}/lib/ DESTINATION lib)
+install(DIRECTORY ${LIBS_INSTALL_DIR}/share/ DESTINATION share)
+
+if (WS_ROS)
+# find dependencies
+find_package(ament_cmake REQUIRED)
+endif() ## end ros

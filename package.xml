@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>nos_library</name>
+  <name>naiad_library</name>
   <version>0.1.0</version>
-  <description>Third part libraries for NOS </description>
+  <description>Third part libraries for NAIAD </description>
   <maintainer email="samule@neptune-robotics.com">xxx</maintainer>
   <license>TODO: License declaration</license>
 
