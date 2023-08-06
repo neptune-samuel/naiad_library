@@ -4,6 +4,9 @@
 # Author: LiuChuansen
 # Date: 20230512
 # 
+# 编译分两个步骤: 一是把每个库当作外部工程，单独编译, 并安装到统一的目录 build/libs-install
+#                二是安装，将libs-install的上当安装到目标位置
+
 cmake_minimum_required(VERSION 3.10)
 
 project(naiad_library)
@@ -25,13 +28,19 @@ message(STATUS "=> CMAKE_INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}")
 message(STATUS "=> LOCAL_INSTALL_PREFIX=${LOCAL_INSTALL_PREFIX}")
 ## End 
 
+if (CMAKE_TOOLCHAIN_FILE)
+set(BUILD_LIBS_CMAKE_ARGS -DLIBS_INSTALL_DIR=${LIBS_INSTALL_DIR} -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE})
+else()
+set(BUILD_LIBS_CMAKE_ARGS -DLIBS_INSTALL_DIR=${LIBS_INSTALL_DIR})
+endif()
+
 include(ExternalProject)
 ExternalProject_Add(build_libs 
     SOURCE_DIR               ${LIBS_BUILD_DIR}
-    CMAKE_ARGS               -DLIBS_INSTALL_DIR=${LIBS_INSTALL_DIR}
+    CMAKE_ARGS               ${BUILD_LIBS_CMAKE_ARGS}
 )
 
-
+## 安装目标
 install(DIRECTORY ${LIBS_INSTALL_DIR}/include/ DESTINATION include)
 install(DIRECTORY ${LIBS_INSTALL_DIR}/lib/ DESTINATION lib)
 install(DIRECTORY ${LIBS_INSTALL_DIR}/share/ DESTINATION share)

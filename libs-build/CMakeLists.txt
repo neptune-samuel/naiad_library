@@ -11,10 +11,10 @@ set(LIBS_INSTALL_DIR ${CMAKE_CURRENT_BINARY_DIR}/install)
 endif()
 
 include(${RULES_DIR}/fmt.cmake)
-include(${RULES_DIR}/docopt.cmake)
+#include(${RULES_DIR}/docopt.cmake)
 include(${RULES_DIR}/libuv.cmake)
-include(${RULES_DIR}/spdlog.cmake)
-include(${RULES_DIR}/cxxopts.cmake)
+#include(${RULES_DIR}/spdlog.cmake)
+#include(${RULES_DIR}/cxxopts.cmake)
 
 ## 设定空的安装目标
 install(CODE "message(\"Skipping install target.\")")
