@@ -15,6 +15,9 @@ include(${RULES_DIR}/fmt.cmake)
 include(${RULES_DIR}/libuv.cmake)
 #include(${RULES_DIR}/spdlog.cmake)
 #include(${RULES_DIR}/cxxopts.cmake)
+include(${RULES_DIR}/nlohmann_json.cmake)
+include(${RULES_DIR}/paho_mqtt_c.cmake)
+include(${RULES_DIR}/paho_mqtt_cpp.cmake)
 
 ## 设定空的安装目标
 install(CODE "message(\"Skipping install target.\")")

@@ -1,0 +1,11 @@
+
+include(ExternalProject)
+
+set(PAHOMQTTC_URL          ${ZIPS_DIR}/paho.mqtt.c.zip)
+set(PAHOMQTTC_CMAKE_ARGS   -DPAHO_BUILD_STATIC=ON -DPAHO_WITH_SSL=ON -DPAHO_HIGH_PERFORMANCE=ON -DCMAKE_INSTALL_PREFIX=${LIBS_INSTALL_DIR} -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE})
+
+ExternalProject_Add(pahomqttc
+    URL                      ${PAHOMQTTC_URL}
+    CMAKE_ARGS               ${PAHOMQTTC_CMAKE_ARGS}
+)
+
